@@ -6,12 +6,18 @@ def main(requests):
 
     if requests.method == "POST":
         form = RegForm(requests.POST)
+
         if form.is_valid():
             try:
+
                 Person.objects.create(**form.cleaned_data)
-                redirect('main')
-            except:
-                form.add_error(None , "Error")
+                return redirect('main')
+
+
+            except Exception:
+                form.add_error(None , 'erroe')
+
+
     else:
         form = RegForm()
     return render(requests ,'main/main.html' , context={'form' :form} )
